@@ -48,7 +48,7 @@
   .sera-blog-hero__subtitle {
     color: var(--color-text-body);
     font-size: 1.05rem;
-    max-width: 560px;
+    max-width: 580px;
     margin: 0 auto var(--spacing-md);
     line-height: 1.7;
   }
@@ -256,6 +256,7 @@
   .sera-blog-card__image-wrapper {
     aspect-ratio: 16 / 10;
     overflow: hidden;
+    background: var(--color-bg-secondary);
   }
   .sera-blog-card__image {
     width: 100%;
@@ -323,6 +324,7 @@
     align-items: center;
     gap: 4px;
     transition: gap 0.3s;
+    margin-top: auto;
   }
   .sera-blog-card:hover .sera-blog-card__read {
     gap: 8px;
@@ -378,6 +380,48 @@
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(0,0,0,0.2);
     opacity: 1;
+  }
+
+  /* Empty State */
+  .sera-blog-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--color-bg-secondary);
+    border-radius: 16px;
+    margin: 20px 0;
+  }
+  .sera-blog-empty__icon {
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+  }
+  .sera-blog-empty h3 {
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+    color: var(--color-text-heading);
+  }
+  .sera-blog-empty p {
+    color: var(--color-text-body);
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+  }
+  .sera-blog-empty__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    background: var(--color-cta);
+    color: #fff;
+    border-radius: 50px;
+    border: none;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .sera-blog-empty__btn:hover {
+    background: var(--color-cta-hover);
   }
 
   /* Newsletter CTA */
@@ -483,14 +527,14 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "{{ blog.title | escape }}",
+          "name": "{{ blog.title | default: 'Skincare Journal' | escape }}",
           "item": "{{ shop.url }}{{ blog.url }}"
         }
       ]
     },
     {
       "@type": "Blog",
-      "name": "{{ blog.title | escape }}",
+      "name": "{{ blog.title | default: 'Seravolve Skincare Journal' | escape }}",
       "description": "Expert skincare tips, ingredient guides, and routine advice from the Seravolve team.",
       "url": "{{ shop.url }}{{ blog.url }}",
       "publisher": {
@@ -503,7 +547,7 @@
 }
 </script>
 
-{%- paginate blog.articles by 12 -%}
+{%- paginate blog.articles by 24 -%}
 
 <!-- ===== BREADCRUMB ===== -->
 <nav class="sera-blog-breadcrumb" aria-label="Breadcrumb">
@@ -511,7 +555,7 @@
     <ol class="sera-blog-breadcrumb__list">
       <li><a href="/">Home</a></li>
       <li class="sera-blog-breadcrumb__sep" aria-hidden="true">›</li>
-      <li aria-current="page">{{ blog.title }}</li>
+      <li aria-current="page">{{ blog.title | default: "Skincare Journal" }}</li>
     </ol>
   </div>
 </nav>
@@ -521,7 +565,7 @@
   <div class="container">
     <span class="sera-blog-hero__badge">Skincare Journal</span>
     <h1 class="sera-blog-hero__title">{{ blog.title | default: "Skincare Tips & Expertise" }}</h1>
-    <p class="sera-blog-hero__subtitle">Expert advice on ingredients, routines, and skin health — loved by our community.</p>
+    <p class="sera-blog-hero__subtitle">Science-backed routines, ingredient breakdowns, and expert skin advice — curated by Seravolve.</p>
     <form class="sera-blog-search" action="/search" method="get" role="search" aria-label="Search blog articles">
       <input type="hidden" name="type" value="article">
       <input type="hidden" name="options[prefix]" value="last">
@@ -529,7 +573,7 @@
         class="sera-blog-search__input"
         type="search"
         name="q"
-        placeholder="Search articles..."
+        placeholder="Search articles, ingredients, routines..."
         aria-label="Search articles"
       >
       <button class="sera-blog-search__btn" type="submit" aria-label="Search">
@@ -541,36 +585,70 @@
 
 <!-- ===== CATEGORY FILTER CHIPS ===== -->
 <nav class="sera-blog-filters" aria-label="Blog category filters">
-  <button class="sera-blog-filter-btn is-active" data-blog-tag="all">All</button>
+  <button class="sera-blog-filter-btn is-active" data-blog-tag="all">All Articles</button>
   <button class="sera-blog-filter-btn" data-blog-tag="routine">Skincare Routine</button>
   <button class="sera-blog-filter-btn" data-blog-tag="ingredients">Ingredients</button>
-  <button class="sera-blog-filter-btn" data-blog-tag="skin concerns">Skin Concerns</button>
-  <button class="sera-blog-filter-btn" data-blog-tag="lifestyle">Lifestyle</button>
+  <button class="sera-blog-filter-btn" data-blog-tag="concerns">Skin Concerns</button>
+  <button class="sera-blog-filter-btn" data-blog-tag="lifestyle">Partners & Lifestyle</button>
 </nav>
 
-<!-- ===== FEATURED ARTICLE ===== -->
+{%- comment -%}
+  Aggregate articles:
+  First check blog.articles, then check all known store blogs to ensure articles are never hidden.
+{%- endcomment -%}
+{%- assign featured_article = null -%}
 {%- if blog.articles.size > 0 -%}
-  {%- assign featured = blog.articles.first -%}
-  {%- assign featured_words = featured.content | strip_html | split: ' ' | size -%}
-  {%- assign featured_read_time = featured_words | divided_by: 200 | plus: 1 -%}
-  <section class="sera-blog-featured" aria-label="Featured article">
+  {%- assign featured_article = blog.articles.first -%}
+{%- else -%}
+  {%- if blogs['skincare-routine'].articles.size > 0 -%}
+    {%- assign featured_article = blogs['skincare-routine'].articles.first -%}
+  {%- elsif blogs['ingredients'].articles.size > 0 -%}
+    {%- assign featured_article = blogs['ingredients'].articles.first -%}
+  {%- elsif blogs['earn-with-seravolve'].articles.size > 0 -%}
+    {%- assign featured_article = blogs['earn-with-seravolve'].articles.first -%}
+  {%- endif -%}
+{%- endif -%}
+
+<!-- ===== FEATURED ARTICLE ===== -->
+{%- if featured_article -%}
+  {%- assign feat_word_count = featured_article.content | strip_html | split: ' ' | size -%}
+  {%- assign feat_read_time = feat_word_count | divided_by: 200 | at_least: 1 -%}
+  {%- assign feat_category = 'Skincare' -%}
+  {%- if featured_article.tags.size > 0 -%}
+    {%- assign feat_category = featured_article.tags.first -%}
+  {%- elsif featured_article.url contains 'skincare-routine' -%}
+    {%- assign feat_category = 'Skincare Routine' -%}
+  {%- elsif featured_article.url contains 'ingredients' -%}
+    {%- assign feat_category = 'Ingredients' -%}
+  {%- elsif featured_article.url contains 'earn' -%}
+    {%- assign feat_category = 'Partner Network' -%}
+  {%- endif -%}
+
+  {%- capture feat_tags -%}
+    {{ featured_article.tags | join: ',' | downcase }},{{ featured_article.title | downcase }},{{ feat_category | downcase }}
+    {%- if featured_article.url contains 'skincare-routine' -%},routine,skincare routine,steps,concerns,skin concerns,barrier{%- endif -%}
+    {%- if featured_article.url contains 'ingredients' -%},ingredients,vitamin c,serum,brightening,antioxidant,dark spots,concerns{%- endif -%}
+    {%- if featured_article.url contains 'earn' -%},lifestyle,partner,affiliate,earn,community{%- endif -%}
+  {%- endcapture -%}
+
+  <section class="sera-blog-featured" data-tags="{{ feat_tags | strip }}" aria-label="Featured article">
     <div class="container">
-      <a href="{{ featured.url }}" class="sera-blog-featured__card" aria-label="Read featured article: {{ featured.title | escape }}">
+      <a href="{{ featured_article.url }}" class="sera-blog-featured__card" aria-label="Read featured article: {{ featured_article.title | escape }}">
         <div class="sera-blog-featured__image-wrapper">
-          {%- if featured.image -%}
+          {%- if featured_article.image -%}
             <img
               class="sera-blog-featured__image"
-              src="{{ featured.image | image_url: width: 800 }}"
+              src="{{ featured_article.image | image_url: width: 800 }}"
               srcset="
-                {{ featured.image | image_url: width: 400 }} 400w,
-                {{ featured.image | image_url: width: 600 }} 600w,
-                {{ featured.image | image_url: width: 800 }} 800w,
-                {{ featured.image | image_url: width: 1200 }} 1200w
+                {{ featured_article.image | image_url: width: 400 }} 400w,
+                {{ featured_article.image | image_url: width: 600 }} 600w,
+                {{ featured_article.image | image_url: width: 800 }} 800w,
+                {{ featured_article.image | image_url: width: 1200 }} 1200w
               "
               sizes="(min-width: 768px) 55vw, 100vw"
-              alt="{{ featured.image.alt | default: featured.title | escape }}"
-              width="{{ featured.image.width }}"
-              height="{{ featured.image.height }}"
+              alt="{{ featured_article.image.alt | default: featured_article.title | escape }}"
+              width="{{ featured_article.image.width }}"
+              height="{{ featured_article.image.height }}"
               loading="eager"
             >
           {%- else -%}
@@ -578,14 +656,14 @@
           {%- endif -%}
         </div>
         <div class="sera-blog-featured__content">
-          <span class="sera-blog-featured__label">Featured</span>
+          <span class="sera-blog-featured__label">{{ feat_category }}</span>
           <div class="sera-blog-featured__meta">
-            <time datetime="{{ featured.published_at | date: '%Y-%m-%d' }}">{{ featured.published_at | date: "%b %d, %Y" }}</time>
+            <time datetime="{{ featured_article.published_at | date: '%Y-%m-%d' }}">{{ featured_article.published_at | date: "%b %d, %Y" }}</time>
             <span aria-hidden="true">•</span>
-            <span>{{ featured_read_time }} min read</span>
+            <span>{{ feat_read_time }} min read</span>
           </div>
-          <h2 class="sera-blog-featured__title">{{ featured.title }}</h2>
-          <p class="sera-blog-featured__excerpt">{{ featured.excerpt_or_content | strip_html | truncate: 180 }}</p>
+          <h2 class="sera-blog-featured__title">{{ featured_article.title }}</h2>
+          <p class="sera-blog-featured__excerpt">{{ featured_article.excerpt_or_content | strip_html | truncate: 180 }}</p>
           <span class="sera-blog-featured__link" aria-hidden="true">
             Read Article <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </span>
@@ -600,13 +678,37 @@
   <div class="container">
     <div class="sera-blog-grid__inner">
 
+      {%- assign rendered_handles = '' -%}
       {%- assign card_counter = 0 -%}
-      {%- for article in blog.articles offset: 1 -%}
+
+      {%- comment -%}
+        Render current blog articles first
+      {%- endcomment -%}
+      {%- for article in blog.articles -%}
+        {%- assign article_handle = article.handle -%}
+        {%- assign rendered_handles = rendered_handles | append: article_handle | append: ',' -%}
         {%- assign card_counter = card_counter | plus: 1 -%}
         {%- assign word_count = article.content | strip_html | split: ' ' | size -%}
-        {%- assign read_time = word_count | divided_by: 200 | plus: 1 -%}
+        {%- assign read_time = word_count | divided_by: 200 | at_least: 1 -%}
+        {%- assign category_label = 'Skincare' -%}
+        {%- if article.tags.size > 0 -%}
+          {%- assign category_label = article.tags.first -%}
+        {%- elsif article.url contains 'skincare-routine' -%}
+          {%- assign category_label = 'Skincare Routine' -%}
+        {%- elsif article.url contains 'ingredients' -%}
+          {%- assign category_label = 'Ingredients' -%}
+        {%- elsif article.url contains 'earn' -%}
+          {%- assign category_label = 'Partner Program' -%}
+        {%- endif -%}
 
-        <a href="{{ article.url }}" class="sera-blog-card" data-tags="{{ article.tags | join: ',' | downcase }}" aria-label="Read article: {{ article.title | escape }}">
+        {%- capture card_tags -%}
+          {{ article.tags | join: ',' | downcase }},{{ article.title | downcase }},{{ category_label | downcase }}
+          {%- if article.url contains 'skincare-routine' -%},routine,skincare routine,steps,concerns,skin concerns,barrier{%- endif -%}
+          {%- if article.url contains 'ingredients' -%},ingredients,vitamin c,serum,brightening,antioxidant,dark spots,concerns{%- endif -%}
+          {%- if article.url contains 'earn' -%},lifestyle,partner,affiliate,earn,community{%- endif -%}
+        {%- endcapture -%}
+
+        <a href="{{ article.url }}" class="sera-blog-card" data-tags="{{ card_tags | strip }}" aria-label="Read article: {{ article.title | escape }}">
           <div class="sera-blog-card__image-wrapper">
             {%- if article.image -%}
               <img
@@ -623,16 +725,16 @@
                 height="{{ article.image.height }}"
                 loading="lazy"
               >
+            {%- elsif article.url contains 'vitamin-c' -%}
+              <img class="sera-blog-card__image" src="{{ '2.jpg' | asset_url }}" alt="{{ article.title | escape }}" loading="lazy" width="600" height="375">
+            {%- elsif article.url contains 'skincare-steps' -%}
+              <img class="sera-blog-card__image" src="{{ 'event-sky_5712.jpg' | asset_url }}" alt="{{ article.title | escape }}" loading="lazy" width="600" height="375">
             {%- else -%}
-              <img class="sera-blog-card__image" src="{{ 'event-sky_5712.jpg' | asset_url }}" alt="Seravolve skincare article" loading="lazy" width="600" height="375">
+              <img class="sera-blog-card__image" src="{{ 'hero.png' | asset_url }}" alt="Seravolve skincare article" loading="lazy" width="600" height="375">
             {%- endif -%}
           </div>
           <div class="sera-blog-card__body">
-            {%- if article.tags.size > 0 -%}
-              <span class="sera-blog-card__category">{{ article.tags.first }}</span>
-            {%- else -%}
-              <span class="sera-blog-card__category">Skincare</span>
-            {%- endif -%}
+            <span class="sera-blog-card__category">{{ category_label }}</span>
             <div class="sera-blog-card__meta">
               <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: "%b %d, %Y" }}</time>
               <span aria-hidden="true">•</span>
@@ -646,7 +748,7 @@
           </div>
         </a>
 
-        {%- if card_counter == 6 -%}
+        {%- if card_counter == 3 -%}
           <!-- Quiz CTA inline card -->
           <div class="sera-blog-quiz-cta">
             <span class="sera-blog-quiz-cta__emoji" aria-hidden="true">✨</span>
@@ -661,9 +763,103 @@
 
       {%- endfor -%}
 
+      {%- comment -%}
+        Render articles from other blogs if not already rendered
+      {%- endcomment -%}
+      {%- assign all_blog_handles = 'skincare-routine,ingredients,earn-with-seravolve,news' | split: ',' -%}
+      {%- for bh in all_blog_handles -%}
+        {%- for other_article in blogs[bh].articles -%}
+          {%- unless rendered_handles contains other_article.handle -%}
+            {%- assign rendered_handles = rendered_handles | append: other_article.handle | append: ',' -%}
+            {%- assign card_counter = card_counter | plus: 1 -%}
+            {%- assign word_count = other_article.content | strip_html | split: ' ' | size -%}
+            {%- assign read_time = word_count | divided_by: 200 | at_least: 1 -%}
+            {%- assign category_label = 'Skincare' -%}
+            {%- if other_article.tags.size > 0 -%}
+              {%- assign category_label = other_article.tags.first -%}
+            {%- elsif other_article.url contains 'skincare-routine' -%}
+              {%- assign category_label = 'Skincare Routine' -%}
+            {%- elsif other_article.url contains 'ingredients' -%}
+              {%- assign category_label = 'Ingredients' -%}
+            {%- elsif other_article.url contains 'earn' -%}
+              {%- assign category_label = 'Partner Program' -%}
+            {%- endif -%}
+
+            {%- capture card_tags -%}
+              {{ other_article.tags | join: ',' | downcase }},{{ other_article.title | downcase }},{{ category_label | downcase }}
+              {%- if other_article.url contains 'skincare-routine' -%},routine,skincare routine,steps,concerns,skin concerns,barrier{%- endif -%}
+              {%- if other_article.url contains 'ingredients' -%},ingredients,vitamin c,serum,brightening,antioxidant,dark spots,concerns{%- endif -%}
+              {%- if other_article.url contains 'earn' -%},lifestyle,partner,affiliate,earn,community{%- endif -%}
+            {%- endcapture -%}
+
+            <a href="{{ other_article.url }}" class="sera-blog-card" data-tags="{{ card_tags | strip }}" aria-label="Read article: {{ other_article.title | escape }}">
+              <div class="sera-blog-card__image-wrapper">
+                {%- if other_article.image -%}
+                  <img
+                    class="sera-blog-card__image"
+                    src="{{ other_article.image | image_url: width: 600 }}"
+                    srcset="
+                      {{ other_article.image | image_url: width: 300 }} 300w,
+                      {{ other_article.image | image_url: width: 450 }} 450w,
+                      {{ other_article.image | image_url: width: 600 }} 600w
+                    "
+                    sizes="(min-width: 1024px) 33vw, (min-width: 600px) 50vw, 100vw"
+                    alt="{{ other_article.image.alt | default: other_article.title | escape }}"
+                    width="{{ other_article.image.width }}"
+                    height="{{ other_article.image.height }}"
+                    loading="lazy"
+                  >
+                {%- elsif other_article.url contains 'vitamin-c' -%}
+                  <img class="sera-blog-card__image" src="{{ '2.jpg' | asset_url }}" alt="{{ other_article.title | escape }}" loading="lazy" width="600" height="375">
+                {%- elsif other_article.url contains 'skincare-steps' -%}
+                  <img class="sera-blog-card__image" src="{{ 'event-sky_5712.jpg' | asset_url }}" alt="{{ other_article.title | escape }}" loading="lazy" width="600" height="375">
+                {%- else -%}
+                  <img class="sera-blog-card__image" src="{{ 'hero.png' | asset_url }}" alt="Seravolve skincare article" loading="lazy" width="600" height="375">
+                {%- endif -%}
+              </div>
+              <div class="sera-blog-card__body">
+                <span class="sera-blog-card__category">{{ category_label }}</span>
+                <div class="sera-blog-card__meta">
+                  <time datetime="{{ other_article.published_at | date: '%Y-%m-%d' }}">{{ other_article.published_at | date: "%b %d, %Y" }}</time>
+                  <span aria-hidden="true">•</span>
+                  <span>{{ read_time }} min read</span>
+                </div>
+                <h2 class="sera-blog-card__title">{{ other_article.title }}</h2>
+                <p class="sera-blog-card__excerpt">{{ other_article.excerpt_or_content | strip_html | truncate: 120 }}</p>
+                <span class="sera-blog-card__read" aria-hidden="true">
+                  Read Article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </span>
+              </div>
+            </a>
+
+            {%- if card_counter == 3 -%}
+              <!-- Quiz CTA inline card -->
+              <div class="sera-blog-quiz-cta">
+                <span class="sera-blog-quiz-cta__emoji" aria-hidden="true">✨</span>
+                <h2 class="sera-blog-quiz-cta__title">Not Sure Where to Start?</h2>
+                <p class="sera-blog-quiz-cta__text">Take our 60-second skin quiz and get a personalized routine — powered by science.</p>
+                <a href="/pages/quiz" class="sera-blog-quiz-cta__btn">
+                  Take the Skin Quiz
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+              </div>
+            {%- endif -%}
+
+          {%- endunless -%}
+        {%- endfor -%}
+      {%- endfor -%}
+
+      <!-- Empty state container for no matching filters/search -->
+      <div class="sera-blog-empty" id="sera-blog-empty" style="display:none;">
+        <div class="sera-blog-empty__icon" aria-hidden="true">🔍</div>
+        <h3>No articles found</h3>
+        <p>Try searching for a different keyword or explore all topics.</p>
+        <button type="button" class="sera-blog-empty__btn" id="sera-blog-reset-btn">View All Articles</button>
+      </div>
+
     </div>
 
-    {%- if paginate.pages > 1 -%}
+    {%- if paginate.pages > 1 and blog.articles.size > 0 -%}
       <nav class="sera-blog-pagination" aria-label="Blog pagination">
         {%- if paginate.previous -%}
           <a href="{{ paginate.previous.url }}" aria-label="Previous page">←</a>
@@ -702,28 +898,86 @@ document.addEventListener('DOMContentLoaded', () => {
   const filterBtns = document.querySelectorAll('.sera-blog-filter-btn');
   const cards = document.querySelectorAll('.sera-blog-card');
   const featured = document.querySelector('.sera-blog-featured');
+  const emptyState = document.getElementById('sera-blog-empty');
+  const searchInput = document.querySelector('.sera-blog-search__input');
+  const resetBtn = document.getElementById('sera-blog-reset-btn');
+  const quizCta = document.querySelector('.sera-blog-quiz-cta');
+
+  let activeTag = 'all';
+  let searchQuery = '';
+
+  function applyFilters() {
+    let visibleCards = 0;
+    const q = searchQuery.trim().toLowerCase();
+
+    // Check featured article visibility
+    if (featured) {
+      const featTags = (featured.dataset.tags || '').toLowerCase();
+      const featText = (featured.textContent || '').toLowerCase();
+      const tagMatch = (activeTag === 'all' || featTags.includes(activeTag));
+      const queryMatch = (!q || featTags.includes(q) || featText.includes(q));
+
+      if (tagMatch && queryMatch) {
+        featured.style.display = '';
+        visibleCards++;
+      } else {
+        featured.style.display = 'none';
+      }
+    }
+
+    // Check grid cards visibility
+    cards.forEach(card => {
+      const cardTags = (card.dataset.tags || '').toLowerCase();
+      const cardText = (card.textContent || '').toLowerCase();
+      const tagMatch = (activeTag === 'all' || cardTags.includes(activeTag));
+      const queryMatch = (!q || cardTags.includes(q) || cardText.includes(q));
+
+      if (tagMatch && queryMatch) {
+        card.style.display = 'flex';
+        visibleCards++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    // Quiz CTA banner visibility
+    if (quizCta) {
+      quizCta.style.display = (activeTag === 'all' && !q) ? 'flex' : 'none';
+    }
+
+    // Empty state visibility
+    if (emptyState) {
+      emptyState.style.display = visibleCards === 0 ? 'block' : 'none';
+    }
+  }
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       filterBtns.forEach(b => b.classList.remove('is-active'));
       btn.classList.add('is-active');
-      const tag = btn.dataset.blogTag;
-
-      cards.forEach(card => {
-        const tags = (card.dataset.tags || '').toLowerCase();
-        if (tag === 'all' || tags.includes(tag)) {
-          card.style.display = '';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-
-      /* Hide featured card when filtering by tag */
-      if (featured) {
-        featured.style.display = tag === 'all' ? '' : 'none';
-      }
+      activeTag = (btn.dataset.blogTag || 'all').toLowerCase();
+      applyFilters();
     });
   });
+
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      applyFilters();
+    });
+  }
+
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      activeTag = 'all';
+      searchQuery = '';
+      if (searchInput) searchInput.value = '';
+      filterBtns.forEach(b => {
+        b.classList.toggle('is-active', b.dataset.blogTag === 'all');
+      });
+      applyFilters();
+    });
+  }
 });
 </script>
 

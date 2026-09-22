@@ -650,50 +650,126 @@
   </div>
 
   <!-- ===== RELATED POSTS ===== -->
-  {%- assign related_posts = blog.articles | where_not: 'id', article.id -%}
   <div class="page-width">
     <section class="sera-article-related" aria-label="Related articles">
       <h2 class="sera-article-related__title">Keep Reading</h2>
       <div class="sera-article-related__grid">
         {%- assign related_count = 0 -%}
-        {%- for related in blog.articles limit: 4 -%}
-          {%- if related.id != article.id and related_count < 3 -%}
-            {%- assign related_count = related_count | plus: 1 -%}
-            {%- assign rel_words = related.content | strip_html | split: ' ' | size -%}
-            {%- assign rel_read_time = rel_words | divided_by: 200 | plus: 1 -%}
-            <a href="{{ related.url }}" class="sera-blog-card" aria-label="Read related article: {{ related.title | escape }}">
-              <div class="sera-blog-card__image-wrapper">
-                {%- if related.image -%}
-                  <img
-                    class="sera-blog-card__image"
-                    src="{{ related.image | image_url: width: 450 }}"
-                    alt="{{ related.image.alt | default: related.title | escape }}"
-                    width="{{ related.image.width }}"
-                    height="{{ related.image.height }}"
-                    loading="lazy"
-                  >
-                {%- else -%}
-                  <img class="sera-blog-card__image" src="{{ 'event-sky_5712.jpg' | asset_url }}" alt="Seravolve skincare article" loading="lazy" width="600" height="375">
-                {%- endif -%}
-              </div>
-              <div class="sera-blog-card__body">
-                {%- if related.tags.size > 0 -%}
-                  <span class="sera-blog-card__category">{{ related.tags.first }}</span>
-                {%- endif -%}
-                <div class="sera-blog-card__meta">
-                  <time datetime="{{ related.published_at | date: '%Y-%m-%d' }}">{{ related.published_at | date: "%b %d, %Y" }}</time>
-                  <span aria-hidden="true">•</span>
-                  <span>{{ rel_read_time }} min read</span>
+        {%- assign shown_ids = article.id | append: ',' -%}
+
+        {%- for related in blog.articles -%}
+          {%- unless shown_ids contains related.id -%}
+            {%- if related_count < 3 -%}
+              {%- assign related_count = related_count | plus: 1 -%}
+              {%- assign shown_ids = shown_ids | append: related.id | append: ',' -%}
+              {%- assign rel_words = related.content | strip_html | split: ' ' | size -%}
+              {%- assign rel_read_time = rel_words | divided_by: 200 | at_least: 1 -%}
+              <a href="{{ related.url }}" class="sera-blog-card" aria-label="Read related article: {{ related.title | escape }}">
+                <div class="sera-blog-card__image-wrapper">
+                  {%- if related.image -%}
+                    <img
+                      class="sera-blog-card__image"
+                      src="{{ related.image | image_url: width: 450 }}"
+                      alt="{{ related.image.alt | default: related.title | escape }}"
+                      width="{{ related.image.width }}"
+                      height="{{ related.image.height }}"
+                      loading="lazy"
+                    >
+                  {%- elsif related.url contains 'vitamin-c' -%}
+                    <img class="sera-blog-card__image" src="{{ '2.jpg' | asset_url }}" alt="{{ related.title | escape }}" loading="lazy" width="600" height="375">
+                  {%- elsif related.url contains 'skincare-steps' -%}
+                    <img class="sera-blog-card__image" src="{{ 'event-sky_5712.jpg' | asset_url }}" alt="{{ related.title | escape }}" loading="lazy" width="600" height="375">
+                  {%- else -%}
+                    <img class="sera-blog-card__image" src="{{ 'hero.png' | asset_url }}" alt="Seravolve skincare article" loading="lazy" width="600" height="375">
+                  {%- endif -%}
                 </div>
-                <h3 class="sera-blog-card__title" style="font-size:1.05rem;">{{ related.title }}</h3>
-                <p class="sera-blog-card__excerpt">{{ related.excerpt_or_content | strip_html | truncate: 100 }}</p>
-                <span class="sera-blog-card__read" aria-hidden="true">
-                  Read Article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </span>
-              </div>
-            </a>
-          {%- endif -%}
+                <div class="sera-blog-card__body">
+                  {%- if related.tags.size > 0 -%}
+                    <span class="sera-blog-card__category">{{ related.tags.first }}</span>
+                  {%- elsif related.url contains 'skincare-routine' -%}
+                    <span class="sera-blog-card__category">Skincare Routine</span>
+                  {%- elsif related.url contains 'ingredients' -%}
+                    <span class="sera-blog-card__category">Ingredients</span>
+                  {%- elsif related.url contains 'earn' -%}
+                    <span class="sera-blog-card__category">Partner Program</span>
+                  {%- else -%}
+                    <span class="sera-blog-card__category">Skincare</span>
+                  {%- endif -%}
+                  <div class="sera-blog-card__meta">
+                    <time datetime="{{ related.published_at | date: '%Y-%m-%d' }}">{{ related.published_at | date: "%b %d, %Y" }}</time>
+                    <span aria-hidden="true">•</span>
+                    <span>{{ rel_read_time }} min read</span>
+                  </div>
+                  <h3 class="sera-blog-card__title" style="font-size:1.05rem;">{{ related.title }}</h3>
+                  <p class="sera-blog-card__excerpt">{{ related.excerpt_or_content | strip_html | truncate: 100 }}</p>
+                  <span class="sera-blog-card__read" aria-hidden="true">
+                    Read Article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                  </span>
+                </div>
+              </a>
+            {%- endif -%}
+          {%- endunless -%}
         {%- endfor -%}
+
+        {%- if related_count < 3 -%}
+          {%- assign fallback_blogs = 'skincare-routine,ingredients,earn-with-seravolve,news' | split: ',' -%}
+          {%- for fbh in fallback_blogs -%}
+            {%- for other_related in blogs[fbh].articles -%}
+              {%- unless shown_ids contains other_related.id -%}
+                {%- if related_count < 3 -%}
+                  {%- assign related_count = related_count | plus: 1 -%}
+                  {%- assign shown_ids = shown_ids | append: other_related.id | append: ',' -%}
+                  {%- assign rel_words = other_related.content | strip_html | split: ' ' | size -%}
+                  {%- assign rel_read_time = rel_words | divided_by: 200 | at_least: 1 -%}
+                  <a href="{{ other_related.url }}" class="sera-blog-card" aria-label="Read related article: {{ other_related.title | escape }}">
+                    <div class="sera-blog-card__image-wrapper">
+                      {%- if other_related.image -%}
+                        <img
+                          class="sera-blog-card__image"
+                          src="{{ other_related.image | image_url: width: 450 }}"
+                          alt="{{ other_related.image.alt | default: other_related.title | escape }}"
+                          width="{{ other_related.image.width }}"
+                          height="{{ other_related.image.height }}"
+                          loading="lazy"
+                        >
+                      {%- elsif other_related.url contains 'vitamin-c' -%}
+                        <img class="sera-blog-card__image" src="{{ '2.jpg' | asset_url }}" alt="{{ other_related.title | escape }}" loading="lazy" width="600" height="375">
+                      {%- elsif other_related.url contains 'skincare-steps' -%}
+                        <img class="sera-blog-card__image" src="{{ 'event-sky_5712.jpg' | asset_url }}" alt="{{ other_related.title | escape }}" loading="lazy" width="600" height="375">
+                      {%- else -%}
+                        <img class="sera-blog-card__image" src="{{ 'hero.png' | asset_url }}" alt="Seravolve skincare article" loading="lazy" width="600" height="375">
+                      {%- endif -%}
+                    </div>
+                    <div class="sera-blog-card__body">
+                      {%- if other_related.tags.size > 0 -%}
+                        <span class="sera-blog-card__category">{{ other_related.tags.first }}</span>
+                      {%- elsif other_related.url contains 'skincare-routine' -%}
+                        <span class="sera-blog-card__category">Skincare Routine</span>
+                      {%- elsif other_related.url contains 'ingredients' -%}
+                        <span class="sera-blog-card__category">Ingredients</span>
+                      {%- elsif other_related.url contains 'earn' -%}
+                        <span class="sera-blog-card__category">Partner Program</span>
+                      {%- else -%}
+                        <span class="sera-blog-card__category">Skincare</span>
+                      {%- endif -%}
+                      <div class="sera-blog-card__meta">
+                        <time datetime="{{ other_related.published_at | date: '%Y-%m-%d' }}">{{ other_related.published_at | date: "%b %d, %Y" }}</time>
+                        <span aria-hidden="true">•</span>
+                        <span>{{ rel_read_time }} min read</span>
+                      </div>
+                      <h3 class="sera-blog-card__title" style="font-size:1.05rem;">{{ other_related.title }}</h3>
+                      <p class="sera-blog-card__excerpt">{{ other_related.excerpt_or_content | strip_html | truncate: 100 }}</p>
+                      <span class="sera-blog-card__read" aria-hidden="true">
+                        Read Article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                      </span>
+                    </div>
+                  </a>
+                {%- endif -%}
+              {%- endunless -%}
+            {%- endfor -%}
+          {%- endfor -%}
+        {%- endif -%}
+
       </div>
     </section>
   </div>
