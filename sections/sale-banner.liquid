@@ -141,7 +141,7 @@
 
 <section class="sale-banner">
   <!-- Full-page background image -->
-  <img class="sale-banner__bg" src="{{ 'sale-banner-bg.jpg' | asset_url }}" alt="Bappa Sale – Ganesh Chaturthi Festive Offer" loading="lazy">
+  <img class="sale-banner__bg" src="{{ 'sale-banner-bg.jpg' | asset_url }}" alt="Pre Navratri Sale – Festive Offer" loading="lazy">
 
   <!-- Responsive Spinning SALE badge — top left -->
   <div class="sale-banner__badge">
@@ -150,7 +150,7 @@
       <path id="badgePath" d="M 50,50 m -35,0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="none" />
       <text font-family="Inter, sans-serif" font-size="7" font-weight="700" fill="#ffffff" letter-spacing="1">
         <textPath href="#badgePath" startOffset="0%">
-          • BAPPA SALE • 10% OFF • BAPPA SALE • 10% OFF
+          • PRE NAVRATRI SALE • 10% OFF • PRE NAVRATRI SALE • 10% OFF
         </textPath>
       </text>
     </svg>
@@ -158,8 +158,8 @@
 
   <!-- Content Card -->
   <div class="sale-banner__content">
-    <h2 class="sale-banner__title">🙏 Bappa Sale – Flat 10% OFF</h2>
-    <p class="sale-banner__text">Celebrate Ganesh Chaturthi to Visarjan with flat 10% OFF sitewide! Use code <strong style="color: var(--color-cta); background: #EBF8FF; padding: 2px 8px; border-radius: 4px; border: 1px dashed var(--color-cta);">FESTIVE10</strong> at checkout. Ganpati Bappa Morya!</p>
+    <h2 class="sale-banner__title">✨ Pre Navratri Sale – Flat 10% OFF</h2>
+    <p class="sale-banner__text">Get ready for the festivities with flat 10% OFF sitewide until the 1st day of Navratri! Use code <strong style="color: var(--color-cta); background: #EBF8FF; padding: 2px 8px; border-radius: 4px; border: 1px dashed var(--color-cta);">FESTIVE10</strong> at checkout.</p>
     <div class="countdown" id="SaleCountdown">
       <div class="countdown__item">
         <div class="countdown__number" id="cd-days">--</div>
@@ -181,13 +181,13 @@
         <div class="countdown__label">Sec</div>
       </div>
     </div>
-    <a href="{{ routes.all_products_collection_url }}" class="sale-banner__btn">Shop Bappa Sale</a>
+    <a href="{{ routes.all_products_collection_url }}" class="sale-banner__btn">Shop Pre Navratri Sale</a>
   </div>
 </section>
 
 <script>
 (function() {
-  const end = new Date('2026-09-27T23:59:59+05:30');
+  const end = new Date('2026-10-11T23:59:59+05:30');
   function update() {
     const now = new Date();
     const diff = end - now;
