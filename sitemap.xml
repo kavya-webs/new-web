@@ -5,12 +5,13 @@
   <!-- ========================================================
        SERAVOLVE — Comprehensive XML Sitemap
        Domain: https://seravolve.com
+       Last updated: 2026-10-01
        ======================================================== -->
 
   <!-- Homepage -->
   <url>
     <loc>https://seravolve.com/</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -20,13 +21,13 @@
        ======================================================== -->
   <url>
     <loc>https://seravolve.com/collections/all</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://seravolve.com/collections/frontpage</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -36,7 +37,7 @@
        ======================================================== -->
   <url>
     <loc>https://seravolve.com/products/salicylic-acid-facewash</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -48,7 +49,7 @@
 
   <url>
     <loc>https://seravolve.com/products/niacinamide-rice-water-toner</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -60,7 +61,7 @@
 
   <url>
     <loc>https://seravolve.com/products/vitamin-c-face-serum</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -72,7 +73,7 @@
 
   <url>
     <loc>https://seravolve.com/products/blue-moisturiser</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -84,7 +85,7 @@
 
   <url>
     <loc>https://seravolve.com/products/sunscreen-fluid-spf</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -99,7 +100,7 @@
        ======================================================== -->
   <url>
     <loc>https://seravolve.com/products/full-seravolve-routine</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -111,7 +112,7 @@
 
   <url>
     <loc>https://seravolve.com/products/skin-brightening-routine</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -123,7 +124,7 @@
 
   <url>
     <loc>https://seravolve.com/products/barrier-repair-and-hydration-routine</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -135,7 +136,7 @@
 
   <url>
     <loc>https://seravolve.com/products/acne-control-routine</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -147,7 +148,7 @@
 
   <url>
     <loc>https://seravolve.com/products/smooth-skin-routine</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -159,7 +160,7 @@
 
   <url>
     <loc>https://seravolve.com/products/daily-uv-defence-routine</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -174,46 +175,135 @@
        ======================================================== -->
   <url>
     <loc>https://seravolve.com/pages/quiz</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
 
   <url>
     <loc>https://seravolve.com/pages/routines</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
 
   <url>
     <loc>https://seravolve.com/pages/about-us</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://seravolve.com/pages/faq</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://seravolve.com/pages/contact</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <!-- ========================================================
-       BLOG & ARTICLES
+       BLOG INDEX PAGES (4 Blogs)
        ======================================================== -->
   <url>
-    <loc>https://seravolve.com/blogs/news</loc>
-    <lastmod>2026-09-03</lastmod>
+    <loc>https://seravolve.com/blogs/skincare-routine</loc>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://seravolve.com/blogs/ingredients</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://seravolve.com/blogs/news</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://seravolve.com/blogs/earn-with-seravolve</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ========================================================
+       BLOG ARTICLES — Skincare Routine
+       ======================================================== -->
+  <url>
+    <loc>https://seravolve.com/blogs/skincare-routine/best-skincare-routine-for-oily-skin-morning-and-night</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <url>
+    <loc>https://seravolve.com/blogs/skincare-routine/best-skincare-routine-for-dry-skin-in-winter</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- ========================================================
+       BLOG ARTICLES — Ingredients
+       ======================================================== -->
+  <url>
+    <loc>https://seravolve.com/blogs/ingredients/salicylic-acid-what-it-actually-does-and-who-needs-it</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <url>
+    <loc>https://seravolve.com/blogs/ingredients/what-are-ceramides-and-why-does-your-moisturizer-need-them</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- ========================================================
+       BLOG ARTICLES — News / Skin Concerns
+       ======================================================== -->
+  <url>
+    <loc>https://seravolve.com/blogs/news/best-skincare-routine-for-acne-prone-skin</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <url>
+    <loc>https://seravolve.com/blogs/news/what-does-vitamin-c-serum-actually-do-for-your-skin</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- ========================================================
+       BLOG ARTICLES — Earn with Seravolve
+       ======================================================== -->
+  <url>
+    <loc>https://seravolve.com/blogs/earn-with-seravolve/seravolve-affiliate-program-everything-you-need-to-know</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://seravolve.com/blogs/earn-with-seravolve/were-looking-for-a-few-trusted-skincare-partners</loc>
+    <lastmod>2026-10-01</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
@@ -222,28 +312,28 @@
        ======================================================== -->
   <url>
     <loc>https://seravolve.com/pages/shipping</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://seravolve.com/pages/refund</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://seravolve.com/pages/privacy</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://seravolve.com/pages/terms</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -253,14 +343,14 @@
        ======================================================== -->
   <url>
     <loc>https://seravolve.com/llms.txt</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://seravolve.com/agents.md</loc>
-    <lastmod>2026-09-03</lastmod>
+    <lastmod>2026-10-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
