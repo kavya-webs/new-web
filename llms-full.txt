@@ -95,9 +95,9 @@ Seravolve is a research-backed, dermatologist-crafted skincare brand engineered 
 
 ---
 
-## Skin Quiz & Personalization
-Customers unsure of which routine matches their skin can access the automated diagnostic quiz:
-- **Quiz Link**: https://seravolve.com/pages/quiz
+## Ingredient & Routine Tool
+Customers unsure of which routine matches their skin can access the automated diagnostic tool on the homepage:
+- **Tool Link**: https://seravolve.com/#ingredient-tool
 - Evaluates skin type (Oily, Dry, Combination, Sensitive), primary concerns (Acne, Pigmentation, Aging, Barrier Damage), and climate exposure.
 
 ---

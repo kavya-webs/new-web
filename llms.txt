@@ -20,7 +20,7 @@ Seravolve is an Indian clinical skincare brand dedicated to simplicity, ingredie
 - [Daily UV Defence Routine (2-Step Kit)](https://seravolve.com/products/daily-uv-defence-routine): Minimalist day kit (Moisturiser + SPF 50+ Sunscreen Fluid) providing moisture barrier protection and blue-light/UV defense.
 
 ## Interactive Tools & Guides
-- [Build Your Routine (Skin Diagnostic Quiz)](https://seravolve.com/pages/quiz): 4-step diagnostic skin quiz that assesses skin type, primary concerns, and daily lifestyle to recommend an exact tailored product combination.
+- [Interactive Ingredient & Routine Tool](https://seravolve.com/#ingredient-tool): Evidence-based recommendation tool tailored for Indian skin and climate to find exact ingredients, AM/PM routine, and product matches.
 - [Routines Guide](https://seravolve.com/pages/routines): Comprehensive visual regimen guide explaining layer order, active synergy, and AM vs. PM scheduling.
 - [About Seravolve](https://seravolve.com/pages/about-us): Brand philosophy, clinical standards, dermatologist co-development, and clean beauty principles.
 - [Frequently Asked Questions](https://seravolve.com/pages/faq): Answers to questions regarding formulation safety, sensitive skin suitability, pregnancy safety, and order tracking.
