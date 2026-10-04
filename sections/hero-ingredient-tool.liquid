@@ -29,6 +29,11 @@
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 
 <style>
+  .hero-tool-section,
+  #ingredient-tool {
+    scroll-margin-top: 80px;
+  }
+
   .hero-tool-section {
     background: linear-gradient(135deg, #091c2b 0%, #123b5a 100%);
     color: #ffffff;
@@ -527,7 +532,7 @@
   }
 </style>
 
-<section class="hero-tool-section">
+<section class="hero-tool-section" id="ingredient-tool-section">
   <div class="hero-tool-bg-glow"></div>
   <div class="hero-tool-container">
     
