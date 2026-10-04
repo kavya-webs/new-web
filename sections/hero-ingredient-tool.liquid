@@ -115,6 +115,7 @@
     font-weight: 500;
     margin-bottom: 2rem;
     text-align: center;
+    color: #ffffff;
   }
 
   .options-grid {
@@ -440,51 +441,52 @@
     // ---- ACNE CONCERN ----
     acne: {
       am: [
-        { name: "Salicylic Acid (BHA)", amount: "2%", why: "Penetrates oil to unclog pores and reduce active breakouts.", product: "facewash" },
-        { name: "Niacinamide", amount: "3-5%", why: "Regulates sebum production and reduces inflammation.", product: "toner" },
-        { name: "Broad Spectrum SPF", amount: "SPF 50+", why: "Prevents acne scars (PIE/PIH) from darkening.", product: "sunscreen" }
+        { name: "Salicylic Acid (BHA)", amount: "2%", why: "Cuts through humid-weather sebum to keep pores clear all day.", product: "facewash" },
+        { name: "Niacinamide", amount: "3-5%", why: "Controls oil and stops post-acne dark spots on melanin-rich skin.", product: "toner" },
+        { name: "Broad Spectrum SPF", amount: "SPF 50+", why: "Crucial to prevent acne marks from permanently darkening in the Indian sun.", product: "sunscreen" }
       ],
       pm: [
-        { name: "Salicylic Acid (BHA)", amount: "2%", why: "Deep cleanses accumulated daily oil and debris.", product: "facewash" },
-        { name: "Benzoyl Peroxide", amount: "2.5-5%", why: "Kills p.acnes bacteria. Highly recommended for active spots.", product: null },
-        { name: "Ceramides", amount: "Multi-complex", why: "Restores barrier damaged by acne treatments without clogging pores.", product: "moisturiser" }
+        { name: "Salicylic Acid (BHA)", amount: "2%", why: "Deep cleanses accumulated daily sweat, pollution, and oil.", product: "facewash" },
+        { name: "Benzoyl Peroxide / Azelaic Acid", amount: "2.5-5%", why: "Kills acne bacteria and fades dark marks. (Start slow).", product: null },
+        { name: "Ceramides", amount: "Multi-complex", why: "Repairs the skin barrier without feeling greasy in hot weather.", product: "moisturiser" }
       ]
     },
     // ---- DULLNESS & PIGMENTATION ----
     dullness: {
       am: [
-        { name: "Vitamin C (Ethyl Ascorbic Acid)", amount: "10%", why: "Powerful antioxidant that inhibits melanin production and brightens skin.", product: "vitc" },
-        { name: "Niacinamide", amount: "3%", why: "Blocks pigment transfer to skin cells.", product: "toner" },
-        { name: "Broad Spectrum SPF", amount: "SPF 50+", why: "UV rays trigger melanin; SPF is non-negotiable for pigmentation.", product: "sunscreen" }
+        { name: "Vitamin C (Ethyl Ascorbic Acid)", amount: "10%", why: "Highly stable in Indian heat; powerful antioxidant that brightens pigmentation.", product: "vitc" },
+        { name: "Niacinamide", amount: "3%", why: "Blocks melanin transfer to prevent new dark spots from forming.", product: "toner" },
+        { name: "Broad Spectrum SPF", amount: "SPF 50+", why: "UV exposure is the #1 cause of pigmentation in Indian skin. Non-negotiable.", product: "sunscreen" }
       ],
       pm: [
-        { name: "Gentle Surfactants", amount: "Balanced", why: "Cleanses without stripping essential lipids.", product: "facewash" },
-        { name: "Alpha Hydroxy Acid (AHA)", amount: "5-8%", why: "Exfoliates dead surface cells for an immediate glow.", product: null },
-        { name: "Hyaluronic Acid + Ceramides", amount: "Optimal", why: "Plumps skin and locks in moisture overnight.", product: "moisturiser" }
+        { name: "Gentle Surfactants", amount: "Balanced", why: "Cleanses without stripping lipids, preventing irritation-induced pigmentation.", product: "facewash" },
+        { name: "Alpha Arbutin / Glycolic Acid", amount: "2-5%", why: "Dermatologist-favorite for fading stubborn PIH. Use 2x a week.", product: null },
+        { name: "Hyaluronic Acid + Ceramides", amount: "Optimal", why: "Plumps skin by effortlessly drawing moisture from humid air.", product: "moisturiser" }
       ]
     },
     // ---- AGING & FINE LINES ----
     aging: {
       am: [
-        { name: "Vitamin C", amount: "10%", why: "Fights free radical damage and stimulates collagen synthesis.", product: "vitc" },
-        { name: "Broad Spectrum SPF", amount: "SPF 50+", why: "Prevents 90% of premature skin aging caused by UV exposure.", product: "sunscreen" }
+        { name: "Vitamin C", amount: "10%", why: "Fights free radicals from high city pollution and stimulates collagen.", product: "vitc" },
+        { name: "Broad Spectrum SPF", amount: "SPF 50+", why: "Prevents 90% of premature aging caused by harsh UVA/UVB rays.", product: "sunscreen" }
       ],
       pm: [
-        { name: "Retinol / Retinoid", amount: "0.1-0.3%", why: "The gold standard for increasing cell turnover and building collagen.", product: null },
-        { name: "Ceramides & Peptides", amount: "Multi-complex", why: "Supports skin structure and counteracts retinol dryness.", product: "moisturiser" }
+        { name: "Gentle Cleanser", amount: "Balanced", why: "Preps the skin for active treatments without causing dryness.", product: "facewash" },
+        { name: "Retinol / Retinoid", amount: "0.1-0.3%", why: "Gold standard for cell turnover. Use the sandwich method to avoid PIH.", product: null },
+        { name: "Ceramides & Peptides", amount: "Multi-complex", why: "Counters retinol irritation and supports the skin structure.", product: "moisturiser" }
       ]
     },
     // ---- BARRIER & SENSITIVE ----
     barrier: {
       am: [
-        { name: "Rice Water Ferment", amount: "Extract", why: "Soothes inflammation and provides gentle hydration.", product: "toner" },
-        { name: "Ceramides", amount: "Multi-complex", why: "Rebuilds the damaged lipid barrier and stops transepidermal water loss.", product: "moisturiser" },
-        { name: "Physical/Hybrid SPF", amount: "SPF 50+", why: "Protects compromised skin from environmental aggressors.", product: "sunscreen" }
+        { name: "Rice Water Ferment", amount: "Extract", why: "Soothes inflammation and provides lightweight, non-sticky hydration.", product: "toner" },
+        { name: "Ceramides", amount: "Multi-complex", why: "Rebuilds lipid barrier frequently damaged by hard water and pollution.", product: "moisturiser" },
+        { name: "Physical/Hybrid SPF", amount: "SPF 50+", why: "Shields compromised skin from intense UV and environmental stressors.", product: "sunscreen" }
       ],
       pm: [
-        { name: "Sulfate-Free Cleanser", amount: "Gentle", why: "Cleanses without disrupting the delicate acid mantle.", product: "facewash" },
+        { name: "Sulfate-Free Cleanser", amount: "Gentle", why: "Ultra-gentle wash that won't disrupt the delicate acid mantle.", product: "facewash" },
         { name: "Centella Asiatica (Cica)", amount: "Extract", why: "Clinically proven to accelerate barrier healing and reduce redness.", product: "vitc" },
-        { name: "Ceramides + Squalane", amount: "Optimal", why: "Mimics natural skin lipids for deep overnight repair.", product: "moisturiser" }
+        { name: "Ceramides + Squalane", amount: "Optimal", why: "Mimics natural skin lipids for deep overnight repair without heaviness.", product: "moisturiser" }
       ]
     }
   };
