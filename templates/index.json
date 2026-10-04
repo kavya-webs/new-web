@@ -10,7 +10,7 @@
 {
   "sections": {
     "hero": {
-      "type": "hero-banner",
+      "type": "hero-ingredient-tool",
       "settings": {}
     },
     "marquee": {
@@ -117,10 +117,6 @@
     "cta-banner": {
       "type": "cta-banner",
       "settings": {}
-    },
-    "shoppable-lookbook": {
-      "type": "shoppable-lookbook",
-      "settings": {}
     }
   },
   "order": [
@@ -133,7 +129,6 @@
     "sale-banner",
     "featured-dark",
     "comparison-table",
-    "cta-banner",
-    "shoppable-lookbook"
+    "cta-banner"
   ]
 }
