@@ -14,7 +14,7 @@
       "type": "textarea",
       "id": "subheading",
       "label": "Subheading",
-      "default": "Tell us your skin type and concern, and our clinical algorithm will recommend the exact ingredients, amounts, and routine you need."
+      "default": "Tell us your skin type, concern, and current season — our algorithm blends clinical actives with time-tested Ayurvedic wisdom for a routine built for Indian skin."
     }
   ],
   "presets": [
@@ -158,6 +158,36 @@
     font-weight: 600;
   }
 
+  .option-btn .option-emoji {
+    font-size: 1.6rem;
+    line-height: 1;
+  }
+
+  .option-btn .option-sub {
+    font-size: 0.78rem;
+    opacity: 0.65;
+    font-weight: 400;
+  }
+
+  .option-btn.selected .option-sub {
+    opacity: 0.7;
+  }
+
+  .season-auto-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: rgba(113, 203, 255, 0.15);
+    color: #71cbff;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    margin-left: 0.3rem;
+  }
+
   .tool-controls {
     display: flex;
     justify-content: space-between;
@@ -199,6 +229,29 @@
     transform: none;
   }
 
+  /* Progress Dots */
+  .tool-progress {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .tool-progress-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    transition: all 0.3s ease;
+  }
+  .tool-progress-dot.active {
+    background: #71cbff;
+    width: 24px;
+    border-radius: 4px;
+  }
+  .tool-progress-dot.done {
+    background: #ffffff;
+  }
+
   /* Results Styling */
   .results-header {
     text-align: center;
@@ -213,6 +266,19 @@
   .results-header p {
     color: rgba(255,255,255,0.8);
     font-size: 0.95rem;
+  }
+  .results-season-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(113, 203, 255, 0.15);
+    color: #71cbff;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    margin-top: 0.6rem;
+    border: 1px solid rgba(113, 203, 255, 0.2);
   }
 
   /* Routine Tabs (shown on mobile, hidden on desktop) */
@@ -338,7 +404,39 @@
     font-size: 0.85rem !important;
     color: #e2e8f0 !important;
     line-height: 1.4 !important;
-    margin: 0 0 0.6rem 0 !important;
+    margin: 0 0 0.5rem 0 !important;
+  }
+
+  /* Ayurvedic Boost Sub-section */
+  .hero-tool-section .hero-tool-boost {
+    background: rgba(74, 222, 128, 0.08) !important;
+    border: 1px solid rgba(74, 222, 128, 0.18) !important;
+    border-radius: 8px !important;
+    padding: 0.45rem 0.65rem !important;
+    margin-bottom: 0.5rem !important;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+  .hero-tool-section .hero-tool-boost-icon {
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    line-height: 1.3;
+  }
+  .hero-tool-section .hero-tool-boost-content {
+    flex: 1;
+    min-width: 0;
+  }
+  .hero-tool-section .hero-tool-boost-name {
+    font-weight: 600 !important;
+    font-size: 0.82rem !important;
+    color: #86efac !important;
+  }
+  .hero-tool-section .hero-tool-boost-why {
+    font-size: 0.78rem !important;
+    color: rgba(255,255,255,0.65) !important;
+    line-height: 1.35 !important;
+    margin-top: 0.1rem;
   }
 
   .hero-tool-section .hero-tool-product-pill {
@@ -435,6 +533,20 @@
     background: rgba(255,255,255,0.1);
   }
 
+  /* Disclaimer */
+  .hero-tool-disclaimer {
+    text-align: center;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.5;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   @media (min-width: 769px) {
     .routine-time-block {
       display: block !important;
@@ -474,6 +586,9 @@
       padding: 0.75rem 0.5rem;
       font-size: 0.92rem;
       border-radius: 10px;
+    }
+    .option-btn .option-sub {
+      font-size: 0.7rem;
     }
     .tool-controls {
       margin-top: 1.25rem;
@@ -543,6 +658,13 @@
 
     <div class="hero-tool-interface" id="ingredient-tool">
       
+      <!-- Progress Dots -->
+      <div class="tool-progress" id="tool-progress">
+        <div class="tool-progress-dot active" data-dot="1"></div>
+        <div class="tool-progress-dot" data-dot="2"></div>
+        <div class="tool-progress-dot" data-dot="3"></div>
+      </div>
+
       <!-- Step 1: Skin Type -->
       <div class="tool-step active" data-step="1">
         <h2 class="tool-question">1. What is your primary skin type?</h2>
@@ -569,22 +691,49 @@
         </div>
         <div class="tool-controls">
           <button class="btn-tool btn-prev">← Back</button>
+          <button class="btn-tool btn-next" disabled>Next Step →</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Season -->
+      <div class="tool-step" data-step="3">
+        <h2 class="tool-question">3. What season is it where you are?</h2>
+        <div class="options-grid" id="season-options">
+          <button class="option-btn" data-value="summer">
+            <span class="option-emoji">☀️</span>
+            Summer
+            <span class="option-sub">Mar – Jun</span>
+          </button>
+          <button class="option-btn" data-value="monsoon">
+            <span class="option-emoji">🌧️</span>
+            Monsoon
+            <span class="option-sub">Jul – Sep</span>
+          </button>
+          <button class="option-btn" data-value="winter">
+            <span class="option-emoji">❄️</span>
+            Winter
+            <span class="option-sub">Oct – Feb</span>
+          </button>
+        </div>
+        <div class="tool-controls">
+          <button class="btn-tool btn-prev">← Back</button>
           <button class="btn-tool btn-next" disabled>Analyze My Skin →</button>
         </div>
       </div>
 
-      <!-- Step 3: Loading -->
-      <div class="tool-step" data-step="3" id="loading-step" style="text-align:center; padding: 4rem 0;">
+      <!-- Step 4: Loading -->
+      <div class="tool-step" data-step="4" id="loading-step" style="text-align:center; padding: 4rem 0;">
         <svg style="animation: spin 1s linear infinite; margin-bottom: 1rem;" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>
-        <h2 class="tool-question">Formulating your clinical routine...</h2>
+        <h2 class="tool-question">Formulating your seasonal routine...</h2>
         <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
       </div>
 
-      <!-- Step 4: Results -->
-      <div class="tool-step" data-step="4" id="results-step">
+      <!-- Step 5: Results -->
+      <div class="tool-step" data-step="5" id="results-step">
         <div class="results-header">
           <h2>Your Skincare Plan</h2>
-          <p id="results-subtitle">Based on your answers, here is the clinical breakdown.</p>
+          <p id="results-subtitle">Based on your answers, here is your personalized breakdown.</p>
+          <div class="results-season-badge" id="results-season-badge"></div>
         </div>
         
         <!-- Mobile AM/PM Tab Toggle -->
@@ -602,6 +751,10 @@
             <h3 class="routine-time-heading">🌙 Evening Routine (PM)</h3>
             <div id="pm-routine-container" class="hero-tool-cards-list"></div>
           </div>
+        </div>
+
+        <div class="hero-tool-disclaimer">
+          🌿 Ayurvedic suggestions are based on traditional wisdom supported by modern research. Individual results may vary. For persistent concerns, please consult a dermatologist.
         </div>
 
         <div class="action-buttons">
@@ -643,72 +796,221 @@
     }
   };
 
+  /* ============================================================
+     SEASONAL + AYURVEDIC INGREDIENT MATRIX
+     Structure: ingredientMatrix[concern][season] = { am: [...], pm: [...] }
+     Each entry: { name, amount, why, product, boost? }
+     boost = { name, why } — Ayurvedic/natural companion
+     ============================================================ */
   const ingredientMatrix = {
-    // ---- ACNE CONCERN ----
+
+    // ═══════════════ ACNE & BREAKOUTS ═══════════════
     acne: {
-      am: [
-        { name: "Salicylic Acid (BHA)", amount: "2%", why: "Cuts through humid-weather sebum to keep pores clear all day.", product: "facewash" },
-        { name: "Niacinamide", amount: "3-5%", why: "Controls oil and stops post-acne dark spots on melanin-rich skin.", product: "toner" },
-        { name: "Broad Spectrum SPF", amount: "SPF 50+", why: "Crucial to prevent acne marks from permanently darkening in the Indian sun.", product: "sunscreen" }
-      ],
-      pm: [
-        { name: "Salicylic Acid (BHA)", amount: "2%", why: "Deep cleanses accumulated daily sweat, pollution, and oil.", product: "facewash" },
-        { name: "Benzoyl Peroxide / Azelaic Acid", amount: "2.5-5%", why: "Kills acne bacteria and fades dark marks. (Start slow).", product: null },
-        { name: "Ceramides", amount: "Multi-complex", why: "Repairs the skin barrier without feeling greasy in hot weather.", product: "moisturiser" }
-      ]
+      summer: {
+        am: [
+          { name: "Salicylic Acid (BHA)", amount: "2%", why: "Dissolves heat-triggered excess sebum without over-stripping.", product: "facewash", boost: { name: "Neem (Nimba)", why: "Nimbidin compound kills acne bacteria naturally — ideal in hot weather." } },
+          { name: "Niacinamide", amount: "3%", why: "Controls summer oil surge and prevents post-acne dark marks.", product: "toner", boost: { name: "Rose Water spritz", why: "Balances skin pH and cools heat-flushed skin instantly." } },
+          { name: "Broad Spectrum SPF", amount: "SPF 50+", why: "Prevents acne scars from darkening under intense summer UV.", product: "sunscreen" }
+        ],
+        pm: [
+          { name: "Salicylic Acid (BHA)", amount: "2%", why: "Deep-cleanses the day's sweat, sunscreen, and pollution residue.", product: "facewash", boost: { name: "Neem Extract wash", why: "Evening antibacterial cleanse to prevent overnight breakouts." } },
+          { name: "Azelaic Acid", amount: "10%", why: "Fades post-inflammatory marks and controls bacterial growth in heat.", product: null, boost: { name: "Turmeric + Aloe mask (2×/week)", why: "Curcumin calms inflammation while aloe cools summer-stressed skin." } },
+          { name: "Lightweight Ceramides", amount: "Multi-complex", why: "Repairs barrier without clogging pores in the summer heat.", product: "moisturiser", boost: { name: "Aloe Vera gel layer", why: "Lightweight cooling hydration perfect for hot nights." } }
+        ]
+      },
+      monsoon: {
+        am: [
+          { name: "Salicylic Acid (BHA)", amount: "2%", why: "Unclogs humidity-swollen pores and dissolves trapped sebum.", product: "facewash", boost: { name: "Neem (Azadirachta indica)", why: "Azadirachtin fights both bacterial and fungal monsoon breakouts." } },
+          { name: "Niacinamide", amount: "3%", why: "Regulates oil that goes into overdrive in monsoon humidity.", product: "toner" },
+          { name: "Broad Spectrum SPF", amount: "SPF 50+ matte", why: "UV penetrates monsoon clouds and haze — protection is essential.", product: "sunscreen" }
+        ],
+        pm: [
+          { name: "Salicylic Acid (BHA)", amount: "2%", why: "Removes humidity-trapped grime and dead cells from the day.", product: "facewash", boost: { name: "Neem wash", why: "Natural antifungal shield against monsoon Malassezia overgrowth." } },
+          { name: "Benzoyl Peroxide", amount: "2.5%", why: "Kills C. acnes bacteria thriving in humid conditions. Start slow.", product: null, boost: { name: "Tea Tree Oil (diluted)", why: "Natural antibacterial that complements treatment without harshness." } },
+          { name: "Oil-free Ceramides", amount: "Lightweight", why: "Barrier repair that won't trap excess monsoon moisture.", product: "moisturiser" }
+        ]
+      },
+      winter: {
+        am: [
+          { name: "Salicylic Acid (BHA)", amount: "2%", why: "Gentle exfoliation to prevent dry-skin-triggered comedones.", product: "facewash", boost: { name: "Honey + Neem wash", why: "Honey adds winter moisture while neem fights bacteria." } },
+          { name: "Niacinamide + Rice Water", amount: "3%", why: "Soothes winter-stressed skin while controlling residual oil.", product: "toner" },
+          { name: "Broad Spectrum SPF", amount: "SPF 50+", why: "Winter UV is deceptively strong and worsens acne marks.", product: "sunscreen" }
+        ],
+        pm: [
+          { name: "Gentle Cleanser", amount: "pH-balanced", why: "Avoid stripping already-dry winter skin — gentle surfactants only.", product: "facewash" },
+          { name: "Azelaic Acid", amount: "10%", why: "Fades marks without the dryness of BP, which would worsen the winter barrier.", product: null, boost: { name: "Turmeric mask (1×/week)", why: "Curcumin reduces redness on cold-stressed, acne-prone skin." } },
+          { name: "Ceramides + Glycerin", amount: "Rich formula", why: "Rich barrier repair essential when cold air strips natural lipids.", product: "moisturiser", boost: { name: "Sesame (Til) oil seal", why: "Traditional Abhyanga oil that locks in moisture during Vata season." } }
+        ]
+      }
     },
-    // ---- DULLNESS & PIGMENTATION ----
+
+    // ═══════════════ DULLNESS & PIGMENTATION ═══════════════
     dullness: {
-      am: [
-        { name: "Vitamin C (Ethyl Ascorbic Acid)", amount: "10%", why: "Highly stable in Indian heat; powerful antioxidant that brightens pigmentation.", product: "vitc" },
-        { name: "Niacinamide", amount: "3%", why: "Blocks melanin transfer to prevent new dark spots from forming.", product: "toner" },
-        { name: "Broad Spectrum SPF", amount: "SPF 50+", why: "UV exposure is the #1 cause of pigmentation in Indian skin. Non-negotiable.", product: "sunscreen" }
-      ],
-      pm: [
-        { name: "Gentle Surfactants", amount: "Balanced", why: "Cleanses without stripping lipids, preventing irritation-induced pigmentation.", product: "facewash" },
-        { name: "Alpha Arbutin / Glycolic Acid", amount: "2-5%", why: "Dermatologist-favorite for fading stubborn PIH. Use 2x a week.", product: null },
-        { name: "Hyaluronic Acid + Ceramides", amount: "Optimal", why: "Plumps skin by effortlessly drawing moisture from humid air.", product: "moisturiser" }
-      ]
+      summer: {
+        am: [
+          { name: "Vitamin C (Ethyl Ascorbic Acid)", amount: "10%", why: "Fights free radicals from high summer pollution and UV oxidative stress.", product: "vitc", boost: { name: "Saffron (Kumkumadi)", why: "Crocin inhibits tyrosinase enzyme to brighten sun-tanned skin." } },
+          { name: "Niacinamide", amount: "3%", why: "Blocks melanin transfer to prevent new dark spots from summer sun.", product: "toner" },
+          { name: "Broad Spectrum SPF", amount: "SPF 50+", why: "UV is the #1 trigger of melanin overproduction in Indian skin.", product: "sunscreen" }
+        ],
+        pm: [
+          { name: "Gentle Cleanser", amount: "Balanced", why: "Removes sunscreen and pollution without irritating brightening actives.", product: "facewash" },
+          { name: "Alpha Arbutin / Glycolic Acid", amount: "2-5%", why: "Accelerates cell turnover to fade summer tan and dark patches.", product: null, boost: { name: "Manjistha Extract", why: "Purpurin inhibits excess melanin synthesis at the root." } },
+          { name: "Hyaluronic Acid + Ceramides", amount: "Optimal", why: "Plumps dehydrated summer skin while repairing the barrier.", product: "moisturiser", boost: { name: "Aloe Vera gel layer", why: "Cooling hydration that enhances serum absorption in heat." } }
+        ]
+      },
+      monsoon: {
+        am: [
+          { name: "Vitamin C (Ethyl Ascorbic Acid)", amount: "10%", why: "Stable brightening antioxidant that works through monsoon cloud cover.", product: "vitc", boost: { name: "Turmeric serum", why: "Curcumin acts as a secondary antioxidant shield alongside Vitamin C." } },
+          { name: "Niacinamide", amount: "3%", why: "Controls excess monsoon oil while steadily fading pigmentation.", product: "toner" },
+          { name: "Broad Spectrum SPF", amount: "SPF 50+", why: "UV penetrates monsoon clouds — pigmentation worsens without protection.", product: "sunscreen" }
+        ],
+        pm: [
+          { name: "Gentle Cleanser", amount: "Balanced", why: "Washes off humid-air grime and pollution that contribute to dullness.", product: "facewash", boost: { name: "Rice Water rinse", why: "Fermented rice water is a traditional brightening cleanser used for centuries." } },
+          { name: "Lactic Acid", amount: "5%", why: "Gentler AHA that exfoliates without excessive moisture loss in humidity.", product: null, boost: { name: "Manjistha Extract", why: "Targets stubborn post-inflammatory hyperpigmentation naturally." } },
+          { name: "Lightweight Ceramides", amount: "Oil-free", why: "Repairs barrier without heaviness in muggy monsoon nights.", product: "moisturiser" }
+        ]
+      },
+      winter: {
+        am: [
+          { name: "Vitamin C (Ethyl Ascorbic Acid)", amount: "10%", why: "Combats winter smog pollution and boosts collagen in cold, dry air.", product: "vitc", boost: { name: "Kumkumadi (Saffron) oil", why: "Safranal provides UV defense and deep glow in dry winter conditions." } },
+          { name: "Niacinamide", amount: "3%", why: "Strengthens skin barrier while blocking melanin transfer.", product: "toner" },
+          { name: "Broad Spectrum SPF", amount: "SPF 50+", why: "Winter sun is deceptively harsh — reflection off surfaces increases UV.", product: "sunscreen" }
+        ],
+        pm: [
+          { name: "Cream Cleanser", amount: "Lipid-rich", why: "Winter demands gentle, lipid-preserving cleansing to avoid barrier damage.", product: "facewash", boost: { name: "Rose Water pre-cleanse", why: "Tones and hydrates before cleansing to protect dry winter skin." } },
+          { name: "Glycolic Acid", amount: "5-8% (2×/week)", why: "Deep exfoliation to combat winter-dulled, flaky skin buildup.", product: null, boost: { name: "Manjistha + Turmeric mask (1×/week)", why: "Dual brightening action for deep winter dullness and uneven tone." } },
+          { name: "Rich Ceramides + Squalane", amount: "Rich formula", why: "Deep overnight moisture lock for parched winter skin.", product: "moisturiser", boost: { name: "Kumkumadi Tailam overnight", why: "Traditional overnight facial oil with saffron for radiant winter glow." } }
+        ]
+      }
     },
-    // ---- AGING & FINE LINES ----
+
+    // ═══════════════ FINE LINES & AGING ═══════════════
     aging: {
-      am: [
-        { name: "Vitamin C", amount: "10%", why: "Fights free radicals from high city pollution and stimulates collagen.", product: "vitc" },
-        { name: "Broad Spectrum SPF", amount: "SPF 50+", why: "Prevents 90% of premature aging caused by harsh UVA/UVB rays.", product: "sunscreen" }
-      ],
-      pm: [
-        { name: "Gentle Cleanser", amount: "Balanced", why: "Preps the skin for active treatments without causing dryness.", product: "facewash" },
-        { name: "Retinol / Retinoid", amount: "0.1-0.3%", why: "Gold standard for cell turnover. Use the sandwich method to avoid PIH.", product: null },
-        { name: "Ceramides & Peptides", amount: "Multi-complex", why: "Counters retinol irritation and supports the skin structure.", product: "moisturiser" }
-      ]
+      summer: {
+        am: [
+          { name: "Vitamin C", amount: "10%", why: "Neutralizes summer pollution free radicals and stimulates collagen.", product: "vitc", boost: { name: "Saffron (Kesar) Extract", why: "Crocin protects against UV-induced photoaging and boosts radiance." } },
+          { name: "Broad Spectrum SPF", amount: "SPF 50+", why: "Prevents 90% of premature aging caused by harsh Indian summer UVA/UVB.", product: "sunscreen" }
+        ],
+        pm: [
+          { name: "Gentle Cleanser", amount: "Balanced", why: "Prepares skin for active treatments without summer-drying it further.", product: "facewash" },
+          { name: "Retinol", amount: "0.1-0.3%", why: "Gold standard for cell turnover — use the sandwich method to avoid irritation.", product: null, boost: { name: "Sandalwood + Aloe mask (1×/week)", why: "Santalol cools retinol-treated skin naturally in summer heat." } },
+          { name: "Ceramides + Peptides", amount: "Multi-complex", why: "Supports retinol-treated skin structure and prevents moisture loss.", product: "moisturiser", boost: { name: "Aloe Vera gel base layer", why: "Cooling base prevents retinol heat-sensitivity in summer weather." } }
+        ]
+      },
+      monsoon: {
+        am: [
+          { name: "Vitamin C", amount: "10%", why: "Antioxidant defense against humid-air oxidative stress and pollution.", product: "vitc" },
+          { name: "Broad Spectrum SPF", amount: "SPF 50+", why: "Monsoon clouds don't block aging UVA rays — protection is essential.", product: "sunscreen" }
+        ],
+        pm: [
+          { name: "Gentle Cleanser", amount: "Balanced", why: "Washes off humidity-trapped pollutants that accelerate aging.", product: "facewash" },
+          { name: "Retinol", amount: "0.1-0.3%", why: "Cell turnover accelerator — monsoon humidity actually reduces retinol dryness.", product: null, boost: { name: "Gotu Kola (Mandukparni/Cica)", why: "Asiaticoside boosts collagen synthesis naturally alongside retinol." } },
+          { name: "Lightweight Ceramides", amount: "Oil-free", why: "Moisture lock without monsoon heaviness on aging skin.", product: "moisturiser", boost: { name: "Rose Water toner", why: "Geraniol provides gentle anti-aging toning in humid conditions." } }
+        ]
+      },
+      winter: {
+        am: [
+          { name: "Vitamin C", amount: "10%", why: "Fights winter smog oxidative damage and boosts collagen production.", product: "vitc", boost: { name: "Kumkumadi (Saffron) oil layer", why: "Deep anti-aging nourishment — saffron and sesame oil combat winter dryness." } },
+          { name: "Broad Spectrum SPF", amount: "SPF 50+", why: "Winter UV accelerates aging — dry skin is more UV-vulnerable.", product: "sunscreen" }
+        ],
+        pm: [
+          { name: "Cream Cleanser", amount: "Lipid-rich", why: "Preserves natural lipids that protect aging skin in cold weather.", product: "facewash" },
+          { name: "Retinol", amount: "0.3%", why: "Higher tolerance in winter due to less UV sensitivity risk — ideal for deeper renewal.", product: null, boost: { name: "Kumkumadi Tailam", why: "Traditional overnight anti-aging oil with saffron, bala, and sesame." } },
+          { name: "Rich Ceramides + Peptides", amount: "Rich formula", why: "Maximum moisture for aging + winter dryness combination.", product: "moisturiser", boost: { name: "Sesame (Til) oil massage", why: "Abhyanga tradition — warm oil massage boosts circulation and skin firmness." } }
+        ]
+      }
     },
-    // ---- BARRIER & SENSITIVE ----
+
+    // ═══════════════ REDNESS & DAMAGED BARRIER ═══════════════
     barrier: {
-      am: [
-        { name: "Rice Water Ferment", amount: "Extract", why: "Soothes inflammation and provides lightweight, non-sticky hydration.", product: "toner" },
-        { name: "Ceramides", amount: "Multi-complex", why: "Rebuilds lipid barrier frequently damaged by hard water and pollution.", product: "moisturiser" },
-        { name: "Physical/Hybrid SPF", amount: "SPF 50+", why: "Shields compromised skin from intense UV and environmental stressors.", product: "sunscreen" }
-      ],
-      pm: [
-        { name: "Sulfate-Free Cleanser", amount: "Gentle", why: "Ultra-gentle wash that won't disrupt the delicate acid mantle.", product: "facewash" },
-        { name: "Centella Asiatica (Cica)", amount: "Extract", why: "Clinically proven to accelerate barrier healing and reduce redness.", product: "vitc" },
-        { name: "Ceramides + Squalane", amount: "Optimal", why: "Mimics natural skin lipids for deep overnight repair without heaviness.", product: "moisturiser" }
-      ]
+      summer: {
+        am: [
+          { name: "Rice Water Ferment", amount: "Extract", why: "Soothes summer-stressed sensitive skin with gentle fermented nutrients.", product: "toner", boost: { name: "Rose Water spritz", why: "Instant cooling relief for heat-irritated compromised barriers." } },
+          { name: "Ceramides", amount: "Multi-complex", why: "Rebuilds lipid barrier weakened by AC-to-heat cycling.", product: "moisturiser", boost: { name: "Aloe Vera gel", why: "Lightweight summer hydration that cools without clogging." } },
+          { name: "Physical/Hybrid SPF", amount: "SPF 50+", why: "Mineral filters are gentler on compromised, heat-sensitized skin.", product: "sunscreen" }
+        ],
+        pm: [
+          { name: "Sulfate-Free Cleanser", amount: "Ultra-gentle", why: "Won't strip the acid mantle of already-compromised summer skin.", product: "facewash" },
+          { name: "Centella Asiatica (Cica)", amount: "Extract", why: "Clinically proven barrier healer — accelerates repair and reduces redness.", product: null, boost: { name: "Sandalwood (Chandan) paste", why: "Santalol's anti-inflammatory action soothes summer heat rash and redness." } },
+          { name: "Ceramides + Squalane", amount: "Optimal", why: "Mimics natural skin lipids for overnight repair without heaviness.", product: "moisturiser" }
+        ]
+      },
+      monsoon: {
+        am: [
+          { name: "Rice Water Ferment", amount: "Extract", why: "Gently hydrates without aggravating humidity-sensitive barriers.", product: "toner" },
+          { name: "Ceramides", amount: "Multi-complex", why: "Protects barrier from humidity-triggered irritation and moisture swings.", product: "moisturiser" },
+          { name: "Mineral SPF", amount: "SPF 50+", why: "Non-irritating protection in humid, polluted monsoon air.", product: "sunscreen" }
+        ],
+        pm: [
+          { name: "Sulfate-Free Cleanser", amount: "Ultra-gentle", why: "Doesn't strip the delicate acid mantle in damp monsoon conditions.", product: "facewash", boost: { name: "Neem (very dilute)", why: "Gentle antifungal protection for barrier-compromised monsoon skin." } },
+          { name: "Centella Asiatica (Cica/Mandukparni)", amount: "Extract", why: "Asiaticoside accelerates monsoon-damaged barrier recovery.", product: null, boost: { name: "Turmeric + Cica paste", why: "Dual anti-inflammatory action for monsoon-triggered redness." } },
+          { name: "Lightweight Ceramides", amount: "Oil-free", why: "Barrier seal without trapping monsoon moisture and causing irritation.", product: "moisturiser", boost: { name: "Aloe Vera gel", why: "Non-occlusive monsoon-appropriate barrier support." } }
+        ]
+      },
+      winter: {
+        am: [
+          { name: "Rice Water + Rose Water", amount: "Ferment + Toner", why: "Combines gentle fermented nutrients with anti-inflammatory toning for winter.", product: "toner", boost: { name: "Rose Water", why: "Citronellol calms winter-irritated skin and restores pH balance." } },
+          { name: "Rich Ceramides", amount: "Multi-complex", why: "Heavy-duty lipid barrier rebuild for harsh winter dryness.", product: "moisturiser", boost: { name: "Sesame (Til) oil base", why: "Ayurvedic Abhyanga oil provides deep winter nourishment for Vata skin." } },
+          { name: "SPF 50+ cream", amount: "Cream-based", why: "Cream-based SPF adds an extra moisture layer in dry winter air.", product: "sunscreen" }
+        ],
+        pm: [
+          { name: "Oil-Based Pre-Cleanse", amount: "Ultra-gentle", why: "Oil method protects fragile winter barrier during cleansing.", product: "facewash", boost: { name: "Coconut oil pre-cleanse", why: "Traditional oil cleansing method for maximum gentleness in cold weather." } },
+          { name: "Centella Asiatica (Cica)", amount: "Extract", why: "Barrier repair accelerator that soothes winter-cracked, red skin.", product: null, boost: { name: "Sandalwood + Kumkumadi oil", why: "Deep overnight nourishment and healing for winter-damaged barriers." } },
+          { name: "Rich Ceramides + Squalane + Glycerin", amount: "Maximum repair", why: "Maximum barrier protection for brutal winter dryness and cold winds.", product: "moisturiser", boost: { name: "Shea + Sesame overnight mask", why: "Occlusive Ayurvedic seal for deep overnight winter repair." } }
+        ]
+      }
     }
+  };
+
+  /* ============================================================
+     AUTO-DETECT INDIAN SEASON
+     ============================================================ */
+  function detectSeason() {
+    const month = new Date().getMonth(); // 0-indexed (0=Jan)
+    if (month >= 2 && month <= 5) return 'summer';   // Mar–Jun
+    if (month >= 6 && month <= 8) return 'monsoon';   // Jul–Sep
+    return 'winter';                                    // Oct–Feb
+  }
+
+  const seasonLabels = {
+    summer: '☀️ Summer Routine (Mar–Jun)',
+    monsoon: '🌧️ Monsoon Routine (Jul–Sep)',
+    winter: '❄️ Winter Routine (Oct–Feb)'
   };
 
   document.addEventListener('DOMContentLoaded', () => {
     let currentStep = 1;
-    const selections = { type: null, concern: null };
+    const selections = { type: null, concern: null, season: null };
+
+    // Auto-detect and pre-select season
+    const autoSeason = detectSeason();
+    const seasonBtns = document.querySelectorAll('#season-options .option-btn');
+    seasonBtns.forEach(btn => {
+      if (btn.dataset.value === autoSeason) {
+        btn.classList.add('selected');
+        selections.season = autoSeason;
+        // Add "Auto-detected" badge
+        const badge = document.createElement('span');
+        badge.className = 'season-auto-badge';
+        badge.textContent = '✓ Current';
+        btn.appendChild(badge);
+        // Enable next button for step 3
+        const step3 = document.querySelector('.tool-step[data-step="3"]');
+        if (step3) step3.querySelector('.btn-next').disabled = false;
+      }
+    });
 
     // Handle Option Selection
     document.querySelectorAll('.option-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const stepDiv = e.target.closest('.tool-step');
+        if (!stepDiv) return;
         const stepNum = parseInt(stepDiv.dataset.step);
         
         // Remove selected from siblings
         stepDiv.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+        // Remove auto-badge if exists
+        stepDiv.querySelectorAll('.season-auto-badge').forEach(b => b.remove());
         // Add selected to clicked
         e.currentTarget.classList.add('selected');
         
@@ -718,15 +1020,16 @@
         // Save selection
         if(stepNum === 1) selections.type = e.currentTarget.dataset.value;
         if(stepNum === 2) selections.concern = e.currentTarget.dataset.value;
+        if(stepNum === 3) selections.season = e.currentTarget.dataset.value;
       });
     });
 
     // Handle Next
     document.querySelectorAll('.btn-next').forEach(btn => {
       btn.addEventListener('click', () => {
-        if(currentStep === 2) {
-          goToStep(3); // Loading
-          setTimeout(() => generateResults(), 1500); // Fake load time
+        if(currentStep === 3) {
+          goToStep(4); // Loading
+          setTimeout(() => generateResults(), 1500);
         } else {
           goToStep(currentStep + 1);
         }
@@ -742,8 +1045,26 @@
     document.querySelector('.btn-retake').addEventListener('click', () => {
       document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
       document.querySelectorAll('.btn-next').forEach(b => b.disabled = true);
+      document.querySelectorAll('.season-auto-badge').forEach(b => b.remove());
       selections.type = null;
       selections.concern = null;
+      selections.season = null;
+
+      // Re-auto-detect season
+      const freshSeason = detectSeason();
+      seasonBtns.forEach(btn => {
+        if (btn.dataset.value === freshSeason) {
+          btn.classList.add('selected');
+          selections.season = freshSeason;
+          const badge = document.createElement('span');
+          badge.className = 'season-auto-badge';
+          badge.textContent = '✓ Current';
+          btn.appendChild(badge);
+          const step3 = document.querySelector('.tool-step[data-step="3"]');
+          if (step3) step3.querySelector('.btn-next').disabled = false;
+        }
+      });
+
       goToStep(1);
     });
 
@@ -751,6 +1072,23 @@
       document.querySelectorAll('.tool-step').forEach(el => el.classList.remove('active'));
       document.querySelector(`.tool-step[data-step="${step}"]`).classList.add('active');
       currentStep = step;
+      updateProgress(step);
+    }
+
+    function updateProgress(step) {
+      const dots = document.querySelectorAll('.tool-progress-dot');
+      dots.forEach((dot, idx) => {
+        const dotStep = idx + 1;
+        dot.classList.remove('active', 'done');
+        if (step >= 4) {
+          // Results: all done
+          dot.classList.add('done');
+        } else if (dotStep === step) {
+          dot.classList.add('active');
+        } else if (dotStep < step) {
+          dot.classList.add('done');
+        }
+      });
     }
 
     // Handle Routine Tabs
@@ -775,8 +1113,9 @@
     });
 
     function generateResults() {
-      const routine = ingredientMatrix[selections.concern];
+      const routine = ingredientMatrix[selections.concern][selections.season];
       document.getElementById('results-subtitle').innerText = `Recommendation for: ${capitalize(selections.type)} skin prone to ${capitalize(selections.concern)}`;
+      document.getElementById('results-season-badge').innerHTML = seasonLabels[selections.season];
       
       // Reset to AM tab
       document.querySelectorAll('.routine-tab-btn').forEach(b => {
@@ -791,7 +1130,7 @@
       renderRoutine('am', routine.am);
       renderRoutine('pm', routine.pm);
       
-      goToStep(4);
+      goToStep(5);
     }
 
     function renderRoutine(time, ingredients) {
@@ -799,6 +1138,19 @@
       container.innerHTML = '';
 
       ingredients.forEach((ing, idx) => {
+        let boostHtml = '';
+        if (ing.boost) {
+          boostHtml = `
+            <div class="hero-tool-boost">
+              <span class="hero-tool-boost-icon">🌿</span>
+              <div class="hero-tool-boost-content">
+                <span class="hero-tool-boost-name">${ing.boost.name}</span>
+                <div class="hero-tool-boost-why">${ing.boost.why}</div>
+              </div>
+            </div>
+          `;
+        }
+
         let actionHtml = '';
         if (ing.product && window.SeravolveProducts[ing.product]) {
           const prod = window.SeravolveProducts[ing.product];
@@ -816,7 +1168,7 @@
           actionHtml = `
             <div class="hero-tool-not-sold-pill">
               <span class="hero-tool-not-sold-icon">💡</span>
-              <span class="hero-tool-not-sold-text">Not sold by Seravolve (Use trusted pharmacy brand)</span>
+              <span class="hero-tool-not-sold-text">Not sold by Seravolve (Use a trusted pharmacy brand)</span>
             </div>
           `;
         }
@@ -829,6 +1181,7 @@
               <span class="hero-tool-ing-amount">${ing.amount}</span>
             </div>
             <p class="hero-tool-why-text">${ing.why}</p>
+            ${boostHtml}
             ${actionHtml}
           </div>
         `;
